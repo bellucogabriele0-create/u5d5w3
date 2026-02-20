@@ -2,6 +2,8 @@ package gabrielebelluco.u5d5w3.controllers;
 
 import gabrielebelluco.u5d5w3.entities.Utente;
 import gabrielebelluco.u5d5w3.exception.ValidationException;
+import gabrielebelluco.u5d5w3.payloads.LoginDTO;
+import gabrielebelluco.u5d5w3.payloads.LoginResponseDTO;
 import gabrielebelluco.u5d5w3.payloads.UtenteDTO;
 import gabrielebelluco.u5d5w3.services.UtenteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,11 @@ public class UtenteController {
             throw new ValidationException(errorsList);
         }
         return this.utenteService.save(body);
+    }
+
+    @PostMapping("/login")
+    public LoginResponseDTO login(@RequestBody LoginDTO body) {
+        return new LoginResponseDTO(this.utenteService.authenticateUtenteAndGenerateToken(body));
     }
 }
 
