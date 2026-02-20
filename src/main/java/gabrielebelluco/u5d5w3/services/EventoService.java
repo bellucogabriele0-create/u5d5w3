@@ -33,4 +33,19 @@ public class EventoService {
         return this.eventoRepo.findById(id)
                 .orElseThrow(() -> new NotFoundException(id));
     }
+
+    public Evento findByIdAndUpdate(UUID id, EventoDTO body) {
+        Evento found = this.findById(id);
+        found.setTitolo(body.titolo());
+        found.setDescrizione(body.descrizione());
+        found.setData(body.data());
+        found.setLocation(body.location());
+        found.setPostiTotali(body.postiTotali());
+        return this.eventoRepo.save(found);
+    }
+
+    public void findByIdAndDelete(UUID id) {
+        Evento found = this.findById(id);
+        this.eventoRepo.delete(found);
+    }
 }

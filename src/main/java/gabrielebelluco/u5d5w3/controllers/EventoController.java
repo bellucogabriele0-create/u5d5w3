@@ -37,4 +37,17 @@ public class EventoController {
         Utente organizer = utenteService.findById(organizzatoreId);
         return eventoService.save(body, organizer);
     }
+
+    @PutMapping("/{eventoId}")
+    public Evento updateEvento(@PathVariable UUID eventoId, @RequestBody @Validated EventoDTO body, BindingResult validationResult) {
+        if (validationResult.hasErrors()) {
+        }
+        return eventoService.findByIdAndUpdate(eventoId, body);
+    }
+
+    @DeleteMapping("/{eventoId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteEvento(@PathVariable UUID eventoId) {
+        eventoService.findByIdAndDelete(eventoId);
+    }
 }

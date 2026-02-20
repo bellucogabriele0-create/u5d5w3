@@ -34,7 +34,7 @@ public class UtenteService {
 
     public Utente save(UtenteDTO body) {
         this.utenteRepository.findByUsername(body.username()).ifPresent(user -> {
-            throw new BadRequestException("Lo username " + body.username() + " è già in uso!");
+            throw new BadRequestException("questo username " + body.username() + " è già in uso");
         });
         Utente newUtente = new Utente(body.username(), bcrypt.encode(body.password()), Ruolo.valueOf(body.ruolo()));
         Utente saved = this.utenteRepository.save(newUtente);
@@ -48,7 +48,7 @@ public class UtenteService {
         if (bcrypt.matches(body.password(), user.getPassword())) {
             return jwtTools.generateToken(user);
         } else {
-            throw new UnauthorizedException("Credenziali errate!");
+            throw new UnauthorizedException("credenziali errate");
         }
     }
 
